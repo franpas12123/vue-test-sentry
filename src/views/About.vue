@@ -1,9 +1,13 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div class="about">
+    <h1>This is an about page</h1>
     <h3>{{ inputmsg }}</h3>
+    <br />
     <input type="text" placeholder="Enter something" v-model="inputmsg" />
     <button @click="clicked">Click me!</button>
+    <br />
+    <input type="text" placeholder="Enter something" v-model="inputmsg2" />
+    <button @click="clicked2">Another one!</button>
   </div>
 </template>
 
@@ -18,6 +22,7 @@ export default {
   data() {
     return {
       inputmsg: '',
+      inputmsg2: '',
     };
   },
   methods: {
@@ -42,31 +47,15 @@ export default {
     clicked() {
       const t = this.currentDateTime();
       const msg = `${t} -- some user -- ${this.inputmsg}`;
-      Sentry.setContext('User', {
-        id: 12345,
-        name: 'Franz',
-      });
+      Sentry.captureMessage(msg);
+      console.log(`sent to sentry. ${msg}`);
+    },
+    clicked2() {
+      const t = this.currentDateTime();
+      const msg = `${t} -- some user -- ${this.inputmsg2}`;
       Sentry.captureMessage(msg);
       console.log(`sent to sentry. ${msg}`);
     },
   },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
