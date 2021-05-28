@@ -1,17 +1,27 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <img alt="Vue logo" src="./assets/logo.png" />
+  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <br />
+  <button @click="throwError">
+    Throw error
+  </button>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld.vue';
+import * as Sentry from '@sentry/vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    HelloWorld,
+  },
+  methods: {
+    throwError() {
+      Sentry.captureMessage('Something went wrong');
+    },
+  },
+};
 </script>
 
 <style>
